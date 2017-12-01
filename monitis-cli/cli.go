@@ -44,4 +44,13 @@ func main() {
 		}
 		log.Printf("External monitors: %+v", monitors)
 	}
+
+	if true {
+		testId := "773757"
+		results, err := monitis.GetExternalResults(testId, config.ApiKey, authToken)
+		if err != nil {
+			log.Fatalf("Error from GetExternalResults: %s", err)
+		}
+		log.Printf("External results: %+v", results)
+	}
 }

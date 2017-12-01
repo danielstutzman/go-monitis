@@ -8,6 +8,7 @@
 * Predefined Monitors:
   * External Monitors:
     * Get List of External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitors)
+    * Get External Monitor Results [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorResults)
 * Contacts API:
   * Get Recent Alerts [(API docs)](http://www.monitis.com/docs/apiActions.html#getRecentAlerts)
 
