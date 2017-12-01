@@ -13,5 +13,10 @@
 go get -u github.com/danielstutzman/go-monitis
 ```
 
+## Command-line interface for testing
+```
+$GOPATH/bin/monitis-cli -apikey API_KEY_HERE -secretkey SECRET_KEY_HERE
+```
+
 ## See also
 * [Monitis REST API documentation](http://www.monitis.com/docs/api.html)
