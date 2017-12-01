@@ -37,7 +37,24 @@ func main() {
 		log.Printf("Recent alerts: %+v", alerts)
 	}
 
-	if true {
+	if false {
+		m := monitis.AddExternalMonitorOptions{
+			Name:             monitis.String("myname"),
+			DetailedTestType: monitis.Int(1),
+			Tag:              monitis.String("Default"),
+			LocationIds:      monitis.String("1,9"),
+			Url:              monitis.String("www.example.com"),
+			Type:             monitis.String("http"),
+			Interval:         monitis.Int(15),
+		}
+		monitor, err := monitis.AddExternalMonitor(&m, config.ApiKey, authToken)
+		if err != nil {
+			log.Fatalf("Error from AddExternalMonitor: %s", err)
+		}
+		log.Printf("New monitor: %+v", monitor)
+	}
+
+	if false {
 		monitors, err := monitis.GetExternalMonitors(config.ApiKey, authToken)
 		if err != nil {
 			log.Fatalf("Error from GetExternalMonitors: %s", err)
@@ -45,7 +62,7 @@ func main() {
 		log.Printf("External monitors: %+v", monitors)
 	}
 
-	if true {
+	if false {
 		testId := "773757"
 		results, err := monitis.GetExternalResults(testId, config.ApiKey, authToken)
 		if err != nil {

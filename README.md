@@ -7,6 +7,7 @@
   * Get User AuthToken [(API docs)](http://www.monitis.com/docs/apiActions.html#getAuthToken)
 * Predefined Monitors:
   * External Monitors:
+    * Add External Monitor [(API docs)](http://www.monitis.com/docs/apiActions.html#addExternalMonitor)
     * Get List of External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitors)
     * Get External Monitor Results [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorResults)
 * Contacts API:
