@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/danielstutzman/go-monitis"
 	"log"
 )
 
@@ -23,12 +24,12 @@ func main() {
 		log.Fatalf("Missing -secretkey")
 	}
 
-	authToken, err := getAuthToken(config.ApiKey, config.SecretKey)
+	authToken, err := monitis.GetAuthToken(config.ApiKey, config.SecretKey)
 	if err != nil {
 		log.Fatalf("Error from getAuthToken: %s", err)
 	}
 
-	alerts, err := getRecentAlerts(config.ApiKey, authToken)
+	alerts, err := monitis.GetRecentAlerts(config.ApiKey, authToken)
 	if err != nil {
 		log.Fatalf("Error from getRecentAlerts: %s", err)
 	}

@@ -1,4 +1,4 @@
-package main
+package monitis
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func getAuthToken(apiKey, secretKey string) (string, error) {
+func GetAuthToken(apiKey, secretKey string) (string, error) {
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", "http://www.monitis.com/api?action=authToken&apikey="+apiKey+"&secretkey="+secretKey, nil)

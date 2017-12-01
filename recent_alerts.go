@@ -1,4 +1,4 @@
-package main
+package monitis
 
 import (
 	"encoding/json"
@@ -37,7 +37,7 @@ type Contact struct {
 	ContactAccount string `json:"contactAccount"`
 }
 
-func getRecentAlerts(apiKey, authToken string) ([]RecentAlert, error) {
+func GetRecentAlerts(apiKey, authToken string) ([]RecentAlert, error) {
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", "http://www.monitis.com/api?action=recentAlerts&apikey="+apiKey+"&authToken="+authToken, nil)
