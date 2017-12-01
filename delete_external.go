@@ -11,8 +11,8 @@ import (
 // testIds: Comma separated ids of the tests to delete.
 // clientApiKey: Required in case reseller is deleting client's monitor.
 //   Specifies the client's API key.
-func DeleteExternalMonitors(testIds string, clientApiKey *string,
-	apiKey, authToken string) error {
+func (auth *Auth) DeleteExternalMonitors(testIds string,
+	clientApiKey *string) error {
 
 	form := url.Values{}
 	form.Add("action", "deleteExternalMonitor")
@@ -20,8 +20,8 @@ func DeleteExternalMonitors(testIds string, clientApiKey *string,
 	if clientApiKey != nil {
 		form.Add("clientApiKey", *clientApiKey)
 	}
-	form.Add("apikey", apiKey)
-	form.Add("authToken", authToken)
+	form.Add("apikey", auth.ApiKey)
+	form.Add("authToken", auth.AuthToken)
 	request, err := http.NewRequest("POST", "http://www.monitis.com/api",
 		strings.NewReader(form.Encode()))
 	if err != nil {

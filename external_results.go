@@ -28,14 +28,16 @@ type PointsTrend struct {
 	NotOkCount float64 `json:"nokcount"`
 }
 
-func GetExternalResults(testId, apiKey, authToken string) ([]GetExternalResultsOutput, error) {
+func (auth *Auth) GetExternalResults(testId string) ([]GetExternalResultsOutput,
+	error) {
+
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", "http://www.monitis.com/api"+
 		"?action=testresult"+
 		"&testId="+testId+
-		"&apikey="+apiKey+
-		"&authToken="+authToken, nil)
+		"&apikey="+auth.ApiKey+
+		"&authToken="+auth.AuthToken, nil)
 	if err != nil {
 		return []GetExternalResultsOutput{},
 			fmt.Errorf("Error from NewRequest: %s", err)

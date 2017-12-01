@@ -24,13 +24,13 @@ func main() {
 		log.Fatalf("Missing -secretkey")
 	}
 
-	authToken, err := monitis.GetAuthToken(config.ApiKey, config.SecretKey)
+	auth, err := monitis.GetAuthToken(config.ApiKey, config.SecretKey)
 	if err != nil {
 		log.Fatalf("Error from GetAuthToken: %s", err)
 	}
 
-	if false {
-		alerts, err := monitis.GetRecentAlerts(config.ApiKey, authToken)
+	if true {
+		alerts, err := auth.GetRecentAlerts()
 		if err != nil {
 			log.Fatalf("Error from GetRecentAlerts: %s", err)
 		}
@@ -47,7 +47,7 @@ func main() {
 			Type:             monitis.String("http"),
 			Interval:         monitis.Int(15),
 		}
-		monitor, err := monitis.AddExternalMonitor(&m, config.ApiKey, authToken)
+		monitor, err := auth.AddExternalMonitor(&m)
 		if err != nil {
 			log.Fatalf("Error from AddExternalMonitor: %s", err)
 		}
@@ -55,7 +55,7 @@ func main() {
 	}
 
 	if false {
-		monitors, err := monitis.GetExternalMonitors(config.ApiKey, authToken)
+		monitors, err := auth.GetExternalMonitors()
 		if err != nil {
 			log.Fatalf("Error from GetExternalMonitors: %s", err)
 		}
@@ -63,16 +63,15 @@ func main() {
 	}
 
 	if false {
-		err := monitis.DeleteExternalMonitors(
-			"1385112", nil, config.ApiKey, authToken)
+		err := auth.DeleteExternalMonitors("1385112", nil)
 		if err != nil {
 			log.Fatalf("Error from DeleteExternalMonitors: %s", err)
 		}
 	}
 
 	if false {
-		testId := "773757"
-		results, err := monitis.GetExternalResults(testId, config.ApiKey, authToken)
+		testId := "917942"
+		results, err := auth.GetExternalResults(testId)
 		if err != nil {
 			log.Fatalf("Error from GetExternalResults: %s", err)
 		}

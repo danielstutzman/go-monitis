@@ -37,10 +37,13 @@ type Contact struct {
 	ContactAccount string `json:"contactAccount"`
 }
 
-func GetRecentAlerts(apiKey, authToken string) ([]RecentAlert, error) {
+func (auth *Auth) GetRecentAlerts() ([]RecentAlert, error) {
 	client := &http.Client{}
 
-	request, err := http.NewRequest("GET", "http://www.monitis.com/api?action=recentAlerts&apikey="+apiKey+"&authToken="+authToken, nil)
+	request, err := http.NewRequest("GET", "http://www.monitis.com/api"+
+		"?action=recentAlerts"+
+		"&apikey="+auth.ApiKey+
+		"&authToken="+auth.AuthToken, nil)
 	if err != nil {
 		return []RecentAlert{}, fmt.Errorf("Error from NewRequest: %s", err)
 	}

@@ -144,15 +144,15 @@ type AddExternalMonitorOutputData struct {
 	IsTestNew string `json:isTestNew`
 }
 
-func AddExternalMonitor(opts *AddExternalMonitorOptions,
-	apiKey, authToken string) (*AddExternalMonitorOutputData, error) {
+func (auth *Auth) AddExternalMonitor(
+	opts *AddExternalMonitorOptions) (*AddExternalMonitorOutputData, error) {
 
 	form := optsToForm(opts)
 	log.Printf("Encoded: %s", form.Encode())
 
 	form.Add("action", "addExternalMonitor")
-	form.Add("apikey", apiKey)
-	form.Add("authToken", authToken)
+	form.Add("apikey", auth.ApiKey)
+	form.Add("authToken", auth.AuthToken)
 	request, err := http.NewRequest("POST", "http://www.monitis.com/api",
 		strings.NewReader(form.Encode()))
 	if err != nil {

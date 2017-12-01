@@ -23,10 +23,13 @@ type ExternalMonitor struct {
 	Url         string   `json:"url"`
 }
 
-func GetExternalMonitors(apiKey, authToken string) ([]ExternalMonitor, error) {
+func (auth *Auth) GetExternalMonitors() ([]ExternalMonitor, error) {
 	client := &http.Client{}
 
-	request, err := http.NewRequest("GET", "http://www.monitis.com/api?action=tests&apikey="+apiKey+"&authToken="+authToken, nil)
+	request, err := http.NewRequest("GET", "http://www.monitis.com/api"+
+		"?action=tests"+
+		"&apikey="+auth.ApiKey+
+		"&authToken="+auth.AuthToken, nil)
 	if err != nil {
 		return []ExternalMonitor{}, fmt.Errorf("Error from NewRequest: %s", err)
 	}

@@ -6,25 +6,38 @@ import (
 	"net/http"
 )
 
-func GetAuthToken(apiKey, secretKey string) (string, error) {
+type Auth struct {
+	ApiKey    string
+	AuthToken string
+}
+
+func GetAuthToken(apiKey, secretKey string) (*Auth, error) {
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", "http://www.monitis.com/api?action=authToken&apikey="+apiKey+"&secretkey="+secretKey, nil)
 	if err != nil {
-		return "", fmt.Errorf("Error from NewRequest: %s", err)
+		return nil, fmt.Errorf("Error from NewRequest: %s", err)
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		return "", fmt.Errorf("Error from client.Do: %s", err)
+		return nil, fmt.Errorf("Error from client.Do: %s", err)
 	}
 
 	defer response.Body.Close()
 	responseJson := map[string]string{}
 	err = json.NewDecoder(response.Body).Decode(&responseJson)
 	if err != nil {
-		return "", fmt.Errorf("Error from Decode: %s", err)
+		return nil, fmt.Errorf("Error from Decode: %s", err)
 	}
 
-	return responseJson["authToken"], nil
+	if responseJson["authToken"] == "" {
+		return nil, fmt.Errorf("No auth token in response: %+v", responseJson)
+	}
+
+	auth := Auth{
+		ApiKey:    apiKey,
+		AuthToken: responseJson["authToken"],
+	}
+	return &auth, nil
 }
