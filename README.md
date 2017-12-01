@@ -3,8 +3,10 @@
 # Go SDK for Monitis API
 
 ## Supported
-* Get auth token
-* Get recent alerts
+* Authentication:
+  * Get User AuthToken [(API docs)](http://www.monitis.com/docs/apiActions.html#getAuthToken)
+* Contacts API:
+  * Get Recent Alerts [(API docs)](http://www.monitis.com/docs/apiActions.html#getRecentAlerts)
 
 ## Installation
 ```
