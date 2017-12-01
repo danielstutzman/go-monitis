@@ -63,6 +63,14 @@ func main() {
 	}
 
 	if false {
+		err := monitis.DeleteExternalMonitors(
+			"1385112", nil, config.ApiKey, authToken)
+		if err != nil {
+			log.Fatalf("Error from DeleteExternalMonitors: %s", err)
+		}
+	}
+
+	if false {
 		testId := "773757"
 		results, err := monitis.GetExternalResults(testId, config.ApiKey, authToken)
 		if err != nil {
