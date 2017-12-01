@@ -5,6 +5,9 @@
 ## Supported
 * Authentication:
   * Get User AuthToken [(API docs)](http://www.monitis.com/docs/apiActions.html#getAuthToken)
+* Predefined Monitors:
+  * External Monitors:
+    * Get List of External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitors)
 * Contacts API:
   * Get Recent Alerts [(API docs)](http://www.monitis.com/docs/apiActions.html#getRecentAlerts)
 

@@ -37,4 +37,11 @@ func main() {
 		log.Printf("Recent alerts: %+v", alerts)
 	}
 
+	if true {
+		monitors, err := monitis.GetExternalMonitors(config.ApiKey, authToken)
+		if err != nil {
+			log.Fatalf("Error from GetExternalMonitors: %s", err)
+		}
+		log.Printf("External monitors: %+v", monitors)
+	}
 }
