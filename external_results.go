@@ -3,6 +3,7 @@ package monitis
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -50,32 +51,50 @@ func (auth *Auth) GetExternalResults(testId string) ([]GetExternalResultsOutput,
 	}
 
 	defer response.Body.Close()
-	output := []GetExternalResultsOutput{}
-	err = json.NewDecoder(response.Body).Decode(&output)
+	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return []GetExternalResultsOutput{},
-			fmt.Errorf("Error from Decode: %s", err)
+		panic(err)
 	}
 
-	newOutput := []GetExternalResultsOutput{}
-	for _, result := range output {
-		for _, tuple := range result.DataTuples {
-			timestamp, err := time.Parse("2006-01-02 15:04", tuple[0].(string))
-			if err != nil {
-				return []GetExternalResultsOutput{},
-					fmt.Errorf("Can't decode timestamp '%s': %s", tuple[0], err)
-			}
-
-			point := Point{
-				Timestamp: timestamp,
-				Duration:  tuple[1].(float64),
-				WasOkay:   tuple[2].(string) == "OK",
-			}
-			result.Points = append(result.Points, point)
+	if body[0] == '{' {
+		output := map[string]interface{}{}
+		err = json.Unmarshal(body, &output)
+		if err != nil {
+			return []GetExternalResultsOutput{},
+				fmt.Errorf("Error from Unmarshal as object: %s", err)
 		}
-		result.DataTuples = [][]interface{}{}
-		newOutput = append(newOutput, result)
-	}
+		return []GetExternalResultsOutput{},
+			fmt.Errorf("API responded with error: %s", output["error"])
+	} else if body[0] == '[' {
+		output := []GetExternalResultsOutput{}
+		err = json.Unmarshal(body, &output)
+		if err != nil {
+			return []GetExternalResultsOutput{},
+				fmt.Errorf("Error from Unmarshal as array: %s", err)
+		}
 
-	return newOutput, nil
+		newOutput := []GetExternalResultsOutput{}
+		for _, result := range output {
+			for _, tuple := range result.DataTuples {
+				timestamp, err := time.Parse("2006-01-02 15:04", tuple[0].(string))
+				if err != nil {
+					return []GetExternalResultsOutput{},
+						fmt.Errorf("Can't decode timestamp '%s': %s", tuple[0], err)
+				}
+
+				point := Point{
+					Timestamp: timestamp,
+					Duration:  tuple[1].(float64),
+					WasOkay:   tuple[2].(string) == "OK",
+				}
+				result.Points = append(result.Points, point)
+			}
+			result.DataTuples = [][]interface{}{}
+			newOutput = append(newOutput, result)
+		}
+		return newOutput, nil
+	} else {
+		return []GetExternalResultsOutput{},
+			fmt.Errorf("API responded with unexpected first character: %s", body)
+	}
 }
