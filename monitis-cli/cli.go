@@ -90,4 +90,13 @@ func main() {
 		}
 		log.Printf("Locations: %+v", locations)
 	}
+
+	if false {
+		testId := "917942"
+		info, err := auth.GetExternalMonitorInfo(testId, nil)
+		if err != nil {
+			log.Fatalf("Error from GetExternalMonitorInfo: %s", err)
+		}
+		log.Printf("Monitor info: %+v", info)
+	}
 }

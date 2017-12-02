@@ -12,6 +12,7 @@
     * Delete External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#deleteExternalMonitor)
     * Get Locations [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorLocations)
     * Get List of External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitors)
+    * Get External Monitor Info [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorInfo)
     * Get External Monitor Results [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorResults)
 * Contacts API:
   * Get Recent Alerts [(API docs)](http://www.monitis.com/docs/apiActions.html#getRecentAlerts)
