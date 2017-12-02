@@ -77,4 +77,12 @@ func main() {
 		}
 		log.Printf("External results: %+v", results)
 	}
+
+	if true {
+		locations, err := auth.GetLocations()
+		if err != nil {
+			log.Fatalf("Error from GetLocations: %s", err)
+		}
+		log.Printf("Locations: %+v", locations)
+	}
 }
