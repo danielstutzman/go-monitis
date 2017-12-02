@@ -4,9 +4,41 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 )
+
+// See http://www.monitis.com/docs/apiActions.html#getExternalMonitorResults
+type GetExternalResultsOptions struct {
+	// Day that results should be retrieved for.
+	// Default value is the first day of the given month.
+	Day *int `param:"day"`
+
+	// Month that results should be retrieved for.
+	// Default value is the current month
+	Month *int `param:"month"`
+
+	// Year that results should be retrieved for.
+	// Default value is the current year
+	Year *int `param:"year"`
+
+	// Comma separated ids of locations for which results should be retrieved.
+	// If not specified results will be retrieved for all locations.
+	LocationIds *string `param:"locationIds"`
+
+	// Offset relative to GMT,
+	// used to show results in the timezone of the user.
+	Timezone *int `param:"timezone"`
+
+	// Default value for XML output is "HH:mm" and for JSON output is
+	// "yyyy-MM-dd HH:mm". You can find some common pattern strings at
+	// http://docs.oracle.com/javase/1.5.0/docs/api/java/text/SimpleDateFormat.html
+	TimeFormat *string `param:"timeformat"`
+
+	// Valid values are: last24hour, last3day, last7day, last30day.
+	Period *string `param:"period"`
+}
 
 type GetExternalResultsOutput struct {
 	LocationName string          `json:"locationName"` // e.g. "USA-WST"
@@ -29,20 +61,25 @@ type PointsTrend struct {
 	NotOkCount float64 `json:"nokcount"`
 }
 
-func (auth *Auth) GetExternalResults(testId string) ([]GetExternalResultsOutput,
-	error) {
+func (auth *Auth) GetExternalResults(testId string,
+	opts *GetExternalResultsOptions) ([]GetExternalResultsOutput, error) {
 
 	client := &http.Client{}
 
-	request, err := http.NewRequest("GET", "http://www.monitis.com/api"+
-		"?action=testresult"+
-		"&testId="+testId+
-		"&apikey="+auth.ApiKey+
-		"&authToken="+auth.AuthToken, nil)
+	form := optsToForm(opts)
+	log.Printf("Encoded: %s", form.Encode())
+
+	form.Add("action", "testresult")
+	form.Add("testId", testId)
+	form.Add("apikey", auth.ApiKey)
+	form.Add("authToken", auth.AuthToken)
+	request, err := http.NewRequest("GET",
+		"http://www.monitis.com/api?"+form.Encode(), nil)
 	if err != nil {
 		return []GetExternalResultsOutput{},
 			fmt.Errorf("Error from NewRequest: %s", err)
 	}
+	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	response, err := client.Do(request)
 	if err != nil {

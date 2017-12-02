@@ -29,7 +29,7 @@ func main() {
 		log.Fatalf("Error from GetAuthToken: %s", err)
 	}
 
-	if true {
+	if false {
 		alerts, err := auth.GetRecentAlerts()
 		if err != nil {
 			log.Fatalf("Error from GetRecentAlerts: %s", err)
@@ -71,14 +71,19 @@ func main() {
 
 	if false {
 		testId := "917942"
-		results, err := auth.GetExternalResults(testId)
+		results, err := auth.GetExternalResults(testId,
+			&monitis.GetExternalResultsOptions{
+				Year:  monitis.Int(2016),
+				Month: monitis.Int(9),
+				Day:   monitis.Int(20),
+			})
 		if err != nil {
 			log.Fatalf("Error from GetExternalResults: %s", err)
 		}
 		log.Printf("External results: %+v", results)
 	}
 
-	if true {
+	if false {
 		locations, err := auth.GetLocations()
 		if err != nil {
 			log.Fatalf("Error from GetLocations: %s", err)
