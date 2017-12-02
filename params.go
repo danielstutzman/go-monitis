@@ -15,7 +15,15 @@ func Int(i int) *int {
 	return &i
 }
 
-func optsToForm(opts *AddExternalMonitorOptions) url.Values {
+func BoolToInt(b bool) *int {
+	i := 0
+	if b {
+		i = 1
+	}
+	return &i
+}
+
+func optsToForm(opts interface{}) url.Values {
 	form := url.Values{}
 	optsReflect := reflect.ValueOf(opts).Elem()
 	for i := 0; i < optsReflect.NumField(); i++ {

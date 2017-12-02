@@ -8,6 +8,7 @@
 * Predefined Monitors:
   * External Monitors:
     * Add External Monitor [(API docs)](http://www.monitis.com/docs/apiActions.html#addExternalMonitor)
+    * Edit External Monitor [(API docs)](http://www.monitis.com/docs/apiActions.html#editExternalMonitor)
     * Delete External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#deleteExternalMonitor)
     * Get List of External Monitors [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitors)
     * Get External Monitor Results [(API docs)](http://www.monitis.com/docs/apiActions.html#getExternalMonitorResults)
