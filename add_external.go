@@ -90,7 +90,7 @@ type AddExternalMonitorOptions struct {
 	ResponseSla *int `param:"responseSLA"`
 
 	// Username for authentication.
-	BasicUserAuth *string `param:"basicUserAuth"`
+	BasicAuthUser *string `param:"basicAuthUser"`
 
 	// Password for authentication.
 	BasicAuthPass *string `param:"basicAuthPass"`
